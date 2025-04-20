@@ -7,9 +7,7 @@
           <v-card-title class="text-h4 font-weight-bold text-center">
             Lista de Transportistas
           </v-card-title>
-          <v-card-subtitle class="text-center mb-4">
-            Visualiza, edita o elimina transportistas registrados en el sistema.
-          </v-card-subtitle>
+
           <v-btn color="green-darken-1" dark @click="agregarTransportista">
             <v-icon left>mdi-plus</v-icon>
             Agregar Transporte
