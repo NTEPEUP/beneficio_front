@@ -19,7 +19,7 @@ const router = useRouter()
 
 function logout() {
   // Aquí puedes agregar la lógica para cerrar sesión, como limpiar el token
-  localStorage.removeItem('authToken') // Ejemplo
+  localStorage.removeItem('token') // Ejemplo
   router.push('/') // Redirigir al login
 }
 </script>
