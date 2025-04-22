@@ -7,6 +7,9 @@ import layout from '@/components/agricultor/layoutAgricultor.vue'
 import appListarTransporte from '@/components/agricultor/appListarTransporte.vue'
 import Transportista from '@/components/agricultor/appCrearTransportista.vue'
 import appListarTransportista from '@/components/agricultor/appListarTranspotista.vue'
+import layoutBeneficio from '@/components/beneficio/layoutbeneficio.vue'
+import listaTranportes from '@/components/beneficio/listaTranportes.vue'
+import listaTransportista from '@/components/beneficio/listaTransportista.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,6 +25,9 @@ const router = createRouter({
       component: Transportes,
       meta: { requiresAuth: true }, // Ruta protegida
     },
+
+    //RUTAS DE AGRICULTOR
+
     {
       path: '/layout',
       component: layout,
@@ -53,6 +59,27 @@ const router = createRouter({
         },
       ],
     },
+    {
+      //RUTAS DE BENEFICIO
+      path: '/beneficio',
+      component: layoutBeneficio,
+      meta: { requiresAuth: true }, // Ruta protegida
+      children: [
+        {
+          path: 'listaTransportes',
+          name: 'listaTransportes',
+          component: listaTranportes,
+          meta: { requiresAuth: true },
+        },
+        {
+          path: 'listaTransportistas',
+          name: 'listaTransportistas',
+          component: listaTransportista,
+          meta: { requiresAuth: true },
+        },
+      ],
+    },
+
     {
       path: '/dashboard',
       name: 'dashboard',

@@ -112,3 +112,15 @@ export default {
   },
 }
 </script>
+<style scoped>
+.v-card {
+  border-radius: 12%;
+}
+.v-btn {
+  transition: background-color 0.3s ease;
+}
+.v-btn:hover {
+  background-color: #45a049;
+  color: white;
+}
+</style>
