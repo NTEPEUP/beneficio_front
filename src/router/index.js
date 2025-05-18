@@ -10,6 +10,10 @@ import appListarTransportista from '@/components/agricultor/appListarTranspotist
 import layoutBeneficio from '@/components/beneficio/layoutbeneficio.vue'
 import listaTranportes from '@/components/beneficio/listaTranportes.vue'
 import listaTransportista from '@/components/beneficio/listaTransportista.vue'
+import layoutPeso from '@/components/peso/layoutPeso.vue'
+import appCrearPesaje from '@/components/agricultor/appCrearPesaje.vue'
+import appListarPesaje from '@/components/agricultor/appListarPesaje.vue'
+import appCrearParcialidad from '@/components/agricultor/appCrearParcialidad.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,13 +33,13 @@ const router = createRouter({
     //RUTAS DE AGRICULTOR
 
     {
-      path: '/layout',
+      path: '/layout/',
       component: layout,
       meta: { requiresAuth: true }, // Ruta protegida
       children: [
         {
-          path: 'transportes',
-          name: 'transportes',
+          path: 'crearTransporte',
+          name: 'crearTransporte',
           component: Transportes,
           meta: { requiresAuth: true }, // Ruta protegida
         },
@@ -57,6 +61,25 @@ const router = createRouter({
           component: appListarTransportista,
           meta: { requiresAuth: true }, // Ruta protegida
         },
+        {
+          path: 'crearPesaje',
+          name: 'crearPesaje',
+          component: appCrearPesaje,
+          meta: { requiresAuth: true }, // Ruta protegida
+        },
+
+        {
+          path: 'listarPesaje',
+          name: 'listarPesaje',
+          component: appListarPesaje,
+          meta: { requiresAuth: true }, // Ruta protegida
+        },
+        {
+          path: 'crearParcialidad',
+          name: 'crearParcialidad',
+          component: appCrearParcialidad,
+          meta: { requiresAuth: true }, // Ruta protegida
+        },
       ],
     },
     {
@@ -66,16 +89,29 @@ const router = createRouter({
       meta: { requiresAuth: true }, // Ruta protegida
       children: [
         {
-          path: 'listaTransportes',
-          name: 'listaTransportes',
+          path: 'transportes',
+          name: 'transportes',
           component: listaTranportes,
-          meta: { requiresAuth: true },
         },
         {
           path: 'listaTransportistas',
           name: 'listaTransportistas',
           component: listaTransportista,
           meta: { requiresAuth: true },
+        },
+      ],
+    },
+
+    {
+      path: '/Peso',
+      component: layoutPeso,
+      meta: { requiresAuth: true }, // Ruta protegida
+      children: [
+        {
+          path: 'listaTransportes',
+          name: 'listaTransportes',
+          component: listaTranportes,
+          meta: { requiresAuth: true }, // Ruta protegida
         },
       ],
     },

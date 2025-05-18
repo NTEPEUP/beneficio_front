@@ -15,9 +15,8 @@
 <script setup>
 const items = [
   { title: 'Cuenta', icon: 'mdi-account-circle', to: '/home' },
-  { title: 'Transportes', icon: 'mdi-truck', to: '/beneficio/transportes' },
-  { title: 'Transportista', icon: 'mdi-account', to: '/beneficio/listaTransportistas' }, // Nuevo ítem
-  { title: 'Agricultor', icon: 'mdi-leaf', to: '/dashboard' }, // Nuevo ítem
+  { title: 'Transportes', icon: 'mdi-truck', to: '/peso/listaTransportes' },
+
   { title: 'Acerca de', icon: 'mdi-information', to: '/about' },
 ]
 </script>

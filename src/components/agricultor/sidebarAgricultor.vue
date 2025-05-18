@@ -14,10 +14,10 @@
 
 <script setup>
 const items = [
-  { title: 'Dashboard', icon: 'mdi-view-dashboard', to: '/home' },
+  { title: 'Dashboard', icon: 'mdi-view-dashboard', to: '/layout/crearParcialidad' },
   { title: 'Transportes', icon: 'mdi-truck', to: '/layout/listarTransportes' },
-  { title: 'Transportista', icon: 'mdi-account', to: '/layout/listarTransportista' }, // Nuevo ítem
-  { title: 'Crear Pesaje', icon: 'mdi-scale-balance', to: '/dashboard' }, // Nuevo ítem
+  { title: 'Transportistas', icon: 'mdi-account', to: '/layout/listarTransportista' }, // Nuevo ítem
+  { title: 'Pesajes', icon: 'mdi-scale-balance', to: '/layout/listarPesaje' }, // Nuevo ítem
   { title: 'Acerca de', icon: 'mdi-information', to: '/about' },
 ]
 </script>

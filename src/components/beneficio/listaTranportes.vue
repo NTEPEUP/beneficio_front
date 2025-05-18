@@ -242,8 +242,8 @@ export default {
   font-size: 14px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  background-color: #28a745; /* Azul */
-  color: #ddd;
+  background-color: #e87f0d; /* Azul */
+  color: white;
 }
 
 .btn-primary {

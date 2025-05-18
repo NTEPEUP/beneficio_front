@@ -193,11 +193,22 @@ export default {
             title: 'Éxito',
             text: 'Transportista registrado correctamente',
           })
+          this.limpiarCampos()
         })
         .catch((error) => {
           console.error('Error al guardar los datos:', error)
           alert('Error al guardar los datos')
         })
+    },
+    limpiarCampos() {
+      this.formData = {
+        cui: null,
+        nombre: '',
+        fechaNacimiento: null,
+        tipoLicencia: '',
+        fechaVencimientoLicencia: null,
+      }
+      this.isFormValid = false
     },
     formatDateToISO(date) {
       if (!date) return null

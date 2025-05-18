@@ -72,9 +72,11 @@ export default {
 
             // Redirigir según el rol
             if (role === 'beneficio') {
-              this.$router.push('/layout')
+              this.$router.push('/beneficio')
             } else if (role === 'agricultor') {
-              this.$router.push('/user-dashboard')
+              this.$router.push('/layout')
+            } else if (role === 'peso cabal') {
+              this.$router.push('/layout')
             } else {
               Swal.fire({
                 icon: 'warning',
@@ -89,8 +91,8 @@ export default {
             // Mostrar alerta de error
             Swal.fire({
               icon: 'error',
-              title: 'Error al iniciar sesión',
-              text: 'Credenciales incorrectas o error en el servidor.',
+              title: 'Error',
+              text: 'Error al autenticar.',
             })
           })
       } else {

@@ -8,7 +8,7 @@
       <v-card-text>
         <v-form @submit.prevent="handleSubmit" ref="form">
           <v-row>
-            <!-- Tipo de Placa -->
+            <!-- Tipo de Placa 
             <v-col cols="12" md="6">
               <v-text-field
                 v-model.number="form.tipo_placa"
@@ -19,6 +19,19 @@
                 required
                 class="mb-4"
               ></v-text-field>
+            </v-col>
+--><!-- Tipo de Placa -->
+            <v-col cols="12" md="6">
+              <v-select
+                v-model="form.tipo_placa"
+                :items="tipoPlacas"
+                item-title="nombre"
+                item-value="id"
+                label="Tipo Placa"
+                outlined
+                dense
+                required
+              ></v-select>
             </v-col>
 
             <!-- Placa -->
@@ -118,9 +131,22 @@ export default {
       },
       placaError: '',
       modeloError: '',
+      tipoPlacas: [],
     }
   },
   methods: {
+    fetchTipoPlaca() {
+      axios
+        .get('http://localhost:8080/tipoPlaca')
+        .then((response) => {
+          this.tipoPlacas = response.data
+        })
+        .catch((error) => {
+          console.error('Error al obtener los tipos de placa: ', error)
+          alert('No se pudieron cargar los tipos de placas')
+        })
+    },
+
     validatePlaca() {
       const placaRegex = /^[0-9]{3}[A-Z]{3}$/
       if (!placaRegex.test(this.form.placa)) {
@@ -137,7 +163,7 @@ export default {
         this.modeloError = ''
       }
     },
-
+    /*
     handleSubmit() {
       this.validatePlaca()
       this.validateModelo()
@@ -167,7 +193,50 @@ export default {
             text: 'El transporte ha sido registrado exitosamente.',
           }).then(() => {
             this.resetForm() //Limpiar formulario despues de guardar
-            this.$router.push('/layout/transportes') // Redirigir a la lista de transportes
+            this.$router.push('/layout/crearTransporte') // Redirigir a la lista de transportes
+          })
+        })
+        .catch((error) => {
+          console.error('Error al registrar el transporte:', error)
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al registrar transporte',
+            text: 'Ocurrió un error al registrar el transporte. Por favor, inténtalo de nuevo.',
+          })
+        })
+    },*/
+
+    handleSubmit() {
+      this.validatePlaca()
+      this.validateModelo()
+      if (this.placaError || this.modeloError) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error de validación',
+          text: 'Por favor, corrige los errores antes de continuar.',
+        })
+        return // Detener el envío si hay errores
+      }
+
+      // Mostrar los datos en la consola antes de enviarlos
+      console.log('Datos enviados al backend:', this.form)
+
+      // Configurar los headers para enviar JSON
+      axios
+        .post('http://localhost:8080/transporte', this.form, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .then((response) => {
+          console.log('Respuesta del servidor:', response.data)
+          Swal.fire({
+            icon: 'success',
+            title: 'Transporte creado',
+            text: 'El transporte ha sido registrado exitosamente.',
+          }).then(() => {
+            this.resetForm() //Limpiar formulario despues de guardar
+            this.$router.push('/layout/crearTransporte') // Redirigir a la lista de transportes
           })
         })
         .catch((error) => {
@@ -194,6 +263,10 @@ export default {
       this.placaError = ''
       this.modeloError = ''
     },
+  },
+
+  mounted() {
+    this.fetchTipoPlaca()
   },
 }
 </script>

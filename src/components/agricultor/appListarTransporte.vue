@@ -70,7 +70,7 @@ export default {
         })
     },
     irACrearTransporte() {
-      this.$router.push('/layout/transportes') // Redirigir al formulario de creación
+      this.$router.push('/layout/crearTransporte') // Redirigir al formulario de creación
     },
   },
   mounted() {
