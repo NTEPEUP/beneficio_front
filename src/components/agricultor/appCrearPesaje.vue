@@ -13,12 +13,12 @@
         ></v-text-field>
         <!-- Campo Medida de Peso -->
         <v-text-field
-          v-model="form.medidaPeso"
+          v-model="form.medida"
           label="Medida de Peso"
           :rules="[rules.required]"
           required
         ></v-text-field>
-        <!-- Campo Peso Total Actual -->
+        <!-- Campo Peso Total Actual
         <v-text-field
           v-model.number="form.pesoTotal"
           label="Peso Total Actual"
@@ -26,6 +26,16 @@
           :rules="[rules.required, rules.positiveNumber]"
           required
         ></v-text-field>
+        -->
+        <!-- Campo Peso Total Actual -->
+        <v-text-field
+          v-model="form.peso_total_actual"
+          label="Peso Total Actual"
+          :rules="[rules.required]"
+          required
+          readonly
+        ></v-text-field>
+
         <!-- Campo Fecha Creación -->
         <v-menu
           v-model="menuFechaCreacion"
@@ -46,7 +56,7 @@
             ></v-text-field>
           </template>
           <v-date-picker
-            v-model="form.fechaCreacion"
+            v-model="form.fecha"
             @update:model-value="handleFechaCreacionSelect"
           ></v-date-picker>
         </v-menu>
@@ -57,7 +67,7 @@
           block
           class="mt-4"
           elevation="2"
-          @click="crearRegistro"
+          @click="crearPesaje"
         >
           Crear
         </v-btn>
@@ -69,16 +79,26 @@
 <script>
 import Swal from 'sweetalert2'
 
+import axios from 'axios'
+
 export default {
   data() {
     return {
+      pesajeId: null,
+      agricultor: null,
+      id_pesaje: null,
+      id_estado: 1,
+      peso_enviado: null,
+      peso_total_obtenido: null,
+      diferencia_total: null,
+
       menuFechaCreacion: false,
       isFormValid: false,
       form: {
-        estado: '',
-        medidaPeso: '',
-        pesoTotal: null,
-        fechaCreacion: null,
+        estado: 'Sin Cuenta Creada',
+        medida: null,
+        peso_total_actual: 'Sin peso',
+        fecha: null,
       },
       rules: {
         required: (v) => !!v || 'Este campo es obligatorio.',
@@ -88,31 +108,63 @@ export default {
   },
   computed: {
     formattedFechaCreacion() {
-      if (!this.form.fechaCreacion) return ''
+      if (!this.form.fecha) return ''
       const isoDate =
-        this.form.fechaCreacion instanceof Date
-          ? this.form.fechaCreacion.toISOString().substr(0, 10)
-          : this.form.fechaCreacion
+        this.form.fecha instanceof Date
+          ? this.form.fecha.toISOString().substr(0, 10)
+          : this.form.fecha
       const [year, month, day] = isoDate.split('-')
       return `${day}/${month}/${year}`
     },
   },
   methods: {
     handleFechaCreacionSelect(value) {
-      this.form.fechaCreacion = value
+      this.form.fecha = value
       this.menuFechaCreacion = false
     },
-    crearRegistro() {
-      console.log('Datos del formulario:', this.form)
 
-      // Simulación de creación del registro
-      Swal.fire({
-        icon: 'success',
-        title: 'Éxito',
-        text: 'Registro creado exitosamente',
-      })
+    crearPesaje() {
+      axios
+        .post('http://localhost:8080/pesaje', this.form)
+        .then((response) => {
+          console.log('Respuesta del backend:', response.data)
+          const idPesaje = response.data.id // Suponiendo que el backend retorna el id así
 
-      // Aquí puedes agregar la lógica para enviar los datos al backend
+          Swal.fire({
+            icon: 'success',
+            title: 'Registro creado',
+            text: `El registro de pesaje ha sido creado exitosamente. ID: ${idPesaje}`,
+          })
+
+          // Ahora crea la cuenta usando el id del pesaje
+          const datosCuenta = {
+            id_pesaje: idPesaje,
+            // agrega aquí otros campos requeridos por tu backend para la cuenta
+          }
+
+          axios
+            .post('http://localhost:8080/cuentas', datosCuenta)
+            .then((res) => {
+              console.log('Cuenta creada:', res.data)
+              // Puedes mostrar otro mensaje si lo deseas
+            })
+            .catch((err) => {
+              console.error('Error al crear la cuenta:', err)
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'El pesaje fue creado, pero hubo un error al crear la cuenta.',
+              })
+            })
+        })
+        .catch((error) => {
+          console.error(error)
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Hubo un error al crear el registro de pesaje.',
+          })
+        })
     },
   },
 }

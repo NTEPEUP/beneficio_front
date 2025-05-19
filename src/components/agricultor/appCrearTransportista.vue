@@ -48,13 +48,24 @@
           ></v-date-picker>
         </v-menu>
 
-        <!-- Campo Tipo de Licencia -->
+        <!-- Campo Tipo de Licencia
         <v-text-field
           v-model="formData.tipoLicencia"
           label="Tipo de Licencia"
           :rules="[rules.required]"
           required
         ></v-text-field>
+         -->
+
+        <v-select
+          v-model="formData.tipoLicencia"
+          :items="licencias"
+          item-title="text"
+          item-value="value"
+          label="Tipo de Licencia"
+          :rules="[rules.required]"
+          required
+        ></v-select>
 
         <!-- Campo Fecha de Vencimiento de Licencia -->
         <v-menu
@@ -106,6 +117,13 @@ export default {
       menu: false,
       menuLicencia: false,
       isFormValid: false,
+      licencias: [
+        { text: 'Tipo A', value: 'A' },
+        { text: 'Tipo B', value: 'B' },
+        { text: 'Tipo C', value: 'C' },
+        { text: 'Tipo M', value: 'M' },
+        { text: 'Tipo E', value: 'E' },
+      ],
       formData: {
         cui: null, // Asegúrate de que sea un número entero
         nombre: '',
@@ -171,6 +189,30 @@ export default {
       this.menuLicencia = false
     },
     submitForm() {
+      // Validar fecha de nacimiento
+      const fechaNacimientoError = this.rules.fechaNacimiento(this.formData.fechaNacimiento)
+      if (fechaNacimientoError !== true) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: fechaNacimientoError,
+        })
+        return
+      }
+
+      // Validar fecha de vencimiento de licencia
+      const fechaVencimientoError = this.rules.fechaVencimientoLicencia(
+        this.formData.fechaVencimientoLicencia,
+      )
+      if (fechaVencimientoError !== true) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: fechaVencimientoError,
+        })
+        return
+      }
+
       const payload = {
         ...this.formData,
         fechaNacimiento: this.formatDateToISO(this.formData.fechaNacimiento),
