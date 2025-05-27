@@ -60,8 +60,14 @@ export default {
   },
   methods: {
     fetchTransportes() {
+      const token = localStorage.getItem('token') // Obtener el token del almacenamiento local
       axios
-        .get('http://localhost:8080/transporte') // Endpoint del backend
+        .get('http://localhost:8080/transporte', {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }) // Endpoint del backend
         .then((response) => {
           this.transportes = response.data // Asignar los datos obtenidos
         })

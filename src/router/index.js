@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+//import HomeView from '../views/HomeView.vue'
 import Login from '@/components/Login.vue'
 import dashboard from '@/components/beneficio/dashboard.vue'
 import Transportes from '@/components/agricultor/appCrearTransporte.vue'
@@ -14,6 +14,8 @@ import layoutPeso from '@/components/peso/layoutPeso.vue'
 import appCrearPesaje from '@/components/agricultor/appCrearPesaje.vue'
 import appListarPesaje from '@/components/agricultor/appListarPesaje.vue'
 import appCrearParcialidad from '@/components/agricultor/appCrearParcialidad.vue'
+import QR from '@/components/agricultor/QR.vue'
+import appParcialidades from '@/components/agricultor/appParcialidades.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -80,6 +82,11 @@ const router = createRouter({
           component: appCrearParcialidad,
           meta: { requiresAuth: true }, // Ruta protegida
         },
+        {
+          path: 'listarParcialidad/:cuenta',
+          name: 'listarParcialidad',
+          component: appParcialidades,
+        },
       ],
     },
     {
@@ -98,6 +105,12 @@ const router = createRouter({
           name: 'listaTransportistas',
           component: listaTransportista,
           meta: { requiresAuth: true },
+        },
+        {
+          path: 'QR',
+          name: 'QR',
+          component: QR,
+          meta: { requiresAuth: true }, // Ruta protegida
         },
       ],
     },

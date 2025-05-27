@@ -85,8 +85,14 @@ export default {
   },
   methods: {
     fetchTransportes() {
+      const token = localStorage.getItem('token') // Obtén el token del almacenamiento local
       axios
-        .get('http://localhost:8080/transporte/activos') // Reemplaza con tu URL
+        .get('http://localhost:8080/transporte/activos', {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }) // Reemplaza con tu URL
         .then((response) => {
           this.transportes = response.data // Asume que la respuesta es un array de transportes
         })
@@ -96,8 +102,14 @@ export default {
         })
     },
     fetchTransportistas() {
+      const token = localStorage.getItem('token') // Obtén el token del almacenamiento local
       axios
-        .get('http://localhost:8080/transportista') // Reemplaza con tu URL
+        .get('http://localhost:8080/transportista', {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }) // Reemplaza con tu URL
         .then((response) => {
           this.transportistas = response.data // Asume que la respuesta es un array de transportistas
         })

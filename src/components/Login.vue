@@ -1,6 +1,6 @@
 <template>
-  <v-container class="login-container" max-width="450px">
-    <v-card elevation="20" class="pa-10">
+  <v-container class="login-container" max-width="300px">
+    <v-card elevation="10" class="pa-2">
       <v-card-title class="text-h5 text-center">Bienvenido</v-card-title>
       <v-card-subtitle class="text-center mb-8">
         Por favor, inicia sesión para continuar
@@ -14,7 +14,7 @@
             required
             outlined
             prepend-inner-icon="mdi-email"
-            height="200px"
+            dense
           ></v-text-field>
           <v-text-field
             v-model="password"
@@ -116,10 +116,15 @@ export default {
 </script>
 <style scoped>
 .v-card {
-  border-radius: 12%;
+  border-radius: 10%;
+  /* Reduce padding for a smaller card */
+  padding: 5 !important;
+}
+.login-container {
+  max-width: 450px !important;
 }
 .v-btn {
-  transition: background-color 0.3s ease;
+  transition: background-color 0.5s ease;
 }
 .v-btn:hover {
   background-color: #45a049;

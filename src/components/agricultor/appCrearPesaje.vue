@@ -11,13 +11,26 @@
           :rules="[rules.required]"
           required
         ></v-text-field>
-        <!-- Campo Medida de Peso -->
+        <!-- Campo Medida de Peso 
         <v-text-field
           v-model="form.medida"
           label="Medida de Peso"
           :rules="[rules.required]"
           required
         ></v-text-field>
+-->
+
+        <v-select
+          v-model="form.medida"
+          :items="medidas"
+          item-title="nombre"
+          item-value="id"
+          label="Tipo de medida"
+          outlined
+          dense
+          required
+        ></v-select>
+
         <!-- Campo Peso Total Actual
         <v-text-field
           v-model.number="form.pesoTotal"
@@ -91,6 +104,7 @@ export default {
       peso_enviado: null,
       peso_total_obtenido: null,
       diferencia_total: null,
+      medidas: [],
 
       menuFechaCreacion: false,
       isFormValid: false,
@@ -124,8 +138,14 @@ export default {
     },
 
     crearPesaje() {
+      const token = localStorage.getItem('token')
       axios
-        .post('http://localhost:8080/pesaje', this.form)
+        .post('http://localhost:8080/pesaje', this.form, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((response) => {
           console.log('Respuesta del backend:', response.data)
           const idPesaje = response.data.id // Suponiendo que el backend retorna el id así
@@ -166,6 +186,20 @@ export default {
           })
         })
     },
+    fetchMedidas() {
+      axios
+        .get('http://localhost:8080/medidas')
+        .then((response) => {
+          this.medidas = response.data
+        })
+        .catch((error) => {
+          console.error('Error al obtener las medidas: ', error)
+          alert('No se pudieron cargar las medidas')
+        })
+    },
+  },
+  mounted() {
+    this.fetchMedidas()
   },
 }
 </script>

@@ -106,13 +106,31 @@ export default {
   },
   methods: {
     fetchTransportes() {
+      const token = localStorage.getItem('token') // Obtener el token del localStorage
+      if (!token) {
+        alert('No tienes sesión iniciada. Por favor, inicia sesión.')
+        this.$router.push('/login')
+        return
+      }
       axios
-        .get('http://localhost:8080/transporte') // Endpoint del backend
+        .get('http://localhost:8080/transporte', {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((response) => {
           this.transportes = response.data // Asignar los datos obtenidos
         })
         .catch((error) => {
-          console.error('Error al obtener transportes:', error)
+          if (error.response && error.response.status === 403) {
+            alert(
+              'No tienes permisos para ver los transportes. Inicia sesión con un usuario autorizado.',
+            )
+            this.$router.push('/login')
+          } else {
+            console.error('Error al obtener transportes:', error)
+          }
         })
     },
     irACrearTransporte() {

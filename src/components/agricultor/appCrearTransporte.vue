@@ -221,11 +221,15 @@ export default {
       // Mostrar los datos en la consola antes de enviarlos
       console.log('Datos enviados al backend:', this.form)
 
-      // Configurar los headers para enviar JSON
+      // Obtener el token almacenado
+      const token = localStorage.getItem('token') // Asegúrate de que el token esté almacenado
+
+      // Configurar los headers para enviar JSON y el token
       axios
         .post('http://localhost:8080/transporte', this.form, {
           headers: {
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`, // Incluir el token en el encabezado
           },
         })
         .then((response) => {
@@ -235,7 +239,7 @@ export default {
             title: 'Transporte creado',
             text: 'El transporte ha sido registrado exitosamente.',
           }).then(() => {
-            this.resetForm() //Limpiar formulario despues de guardar
+            this.resetForm() // Limpiar formulario después de guardar
             this.$router.push('/layout/crearTransporte') // Redirigir a la lista de transportes
           })
         })
