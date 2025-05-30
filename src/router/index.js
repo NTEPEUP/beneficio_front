@@ -83,7 +83,7 @@ const router = createRouter({
           meta: { requiresAuth: true }, // Ruta protegida
         },
         {
-          path: 'listarParcialidad/:cuenta',
+          path: 'listarParcialidad/:cuenta/:id_pesaje',
           name: 'listarParcialidad',
           component: appParcialidades,
         },

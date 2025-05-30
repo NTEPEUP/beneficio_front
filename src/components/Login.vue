@@ -63,6 +63,10 @@ export default {
             console.log('Token guardado:', token)
             console.log('Rol del usuario:', role)
 
+            //guardar el id en sesion , para utilizarlo
+            sessionStorage.setItem('id', response.data.id)
+            console.log('ID del usuario guardado en sesión:', response.data.id)
+
             // Mostrar alerta de éxito
             Swal.fire({
               icon: 'success',

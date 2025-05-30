@@ -86,8 +86,9 @@ export default {
   },
   methods: {
     obtenerTransportistas() {
+      const userId = Number(sessionStorage.getItem('id'))
       axios
-        .get('http://localhost:8080/transportista')
+        .get(`http://localhost:8080/transportista/usuario/${userId}`)
         .then((response) => {
           this.transportistas = response.data
         })

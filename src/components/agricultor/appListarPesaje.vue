@@ -65,16 +65,20 @@ export default {
   },
   methods: {
     async fetchCuentas() {
+      const agricultorId = Number(sessionStorage.getItem('id'))
       try {
-        const response = await axios.get('http://localhost:8080/cuentas')
+        const response = await axios.get(`http://localhost:8080/cuentas/agricultor/${agricultorId}`)
         this.cuentas = response.data
       } catch (error) {
         console.error('Error al obtener las cuentas:', error)
       }
     },
     verParcialidades(item) {
-      console.log('Cuenta enviada:', item.cuenta)
-      this.$router.push({ name: 'listarParcialidad', params: { cuenta: item.cuenta } })
+      console.log('Cuenta enviada:', item.cuenta, 'Pesaje enviado: ', item.id_pesaje)
+      this.$router.push({
+        name: 'listarParcialidad',
+        params: { cuenta: item.cuenta, id_pesaje: item.id_pesaje },
+      })
     },
   },
 }

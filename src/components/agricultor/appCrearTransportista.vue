@@ -130,6 +130,7 @@ export default {
         fechaNacimiento: null,
         tipoLicencia: '',
         fechaVencimientoLicencia: null,
+        usuario: Number(sessionStorage.getItem('id')),
       },
       rules: {
         dpi: (v) => /^\d{13}$/.test(v) || 'El número de DPI debe tener exactamente 13 dígitos.',

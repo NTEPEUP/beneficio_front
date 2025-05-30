@@ -144,6 +144,7 @@ export default {
       this.dialog = true // Mostrar el modal
     },
     actualizarEstado() {
+      const token = localStorage.getItem('token')
       // Validar los datos del formulario
       if (!this.formulario.estado || !this.formulario.observaciones) {
         alert('Por favor, completa todos los campos.')
@@ -153,10 +154,19 @@ export default {
       console.log('datos al backkkk:' + this.formulario.placa)
       // Enviar los datos al backend
       axios
-        .put(`http://localhost:8080/transporte/${this.formulario.placa}`, {
-          estado: this.formulario.estado,
-          observaciones: this.formulario.observaciones,
-        })
+        .put(
+          `http://localhost:8080/transporte/${this.formulario.placa}`,
+          {
+            estado: this.formulario.estado,
+            observaciones: this.formulario.observaciones,
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        )
         .then(() => {
           Swal.fire({
             icon: 'success',

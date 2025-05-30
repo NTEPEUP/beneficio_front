@@ -128,6 +128,7 @@ export default {
         color: '',
         linea: '',
         modelo: '', // Inicializado como texto
+        usuario: Number(sessionStorage.getItem('id')), // <-- ahora es un entero
       },
       placaError: '',
       modeloError: '',
@@ -263,6 +264,7 @@ export default {
         linea: '',
         modelo: '',
       }
+
       // Limpiar los mensajes de error
       this.placaError = ''
       this.modeloError = ''

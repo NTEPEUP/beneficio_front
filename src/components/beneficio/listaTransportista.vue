@@ -106,8 +106,14 @@ export default {
   },
   methods: {
     obtenerTransportistas() {
+      const token = localStorage.getItem('token') // Obtener el token del almacenamiento local
       axios
-        .get('http://localhost:8080/transportista')
+        .get('http://localhost:8080/transportista', {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((response) => {
           this.transportistas = response.data
         })
@@ -123,6 +129,7 @@ export default {
       this.dialog = true // Mostrar el modal
     },
     actualizarEstado() {
+      const token = localStorage.getItem('token')
       // Validar los datos del formulario
       if (!this.formulario.estado || !this.formulario.observaciones) {
         alert('Por favor, completa todos los campos.')
@@ -131,10 +138,19 @@ export default {
 
       // Enviar los datos al backend
       axios
-        .put(`http://localhost:8080/transportista/${this.formulario.cui}`, {
-          estado: this.formulario.estado,
-          observaciones: this.formulario.observaciones,
-        })
+        .put(
+          `http://localhost:8080/transportista/${this.formulario.cui}`,
+          {
+            estado: this.formulario.estado,
+            observaciones: this.formulario.observaciones,
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        )
         .then(() => {
           Swal.fire({
             icon: 'success',

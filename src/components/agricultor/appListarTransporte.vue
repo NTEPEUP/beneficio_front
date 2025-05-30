@@ -61,8 +61,9 @@ export default {
   methods: {
     fetchTransportes() {
       const token = localStorage.getItem('token') // Obtener el token del almacenamiento local
+      const idUser = Number(sessionStorage.getItem('id')) // Obtener el ID del usuario
       axios
-        .get('http://localhost:8080/transporte', {
+        .get(`http://localhost:8080/transporte/usuario/${idUser}`, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,

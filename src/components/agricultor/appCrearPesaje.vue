@@ -98,12 +98,12 @@ export default {
   data() {
     return {
       pesajeId: null,
-      agricultor: null,
+      agricultor: Number(sessionStorage.getItem('id')),
       id_pesaje: null,
       id_estado: 1,
-      peso_enviado: null,
-      peso_total_obtenido: null,
-      diferencia_total: null,
+      peso_enviado: 0,
+      peso_total_obtenido: 0,
+      diferencia_total: 0,
       medidas: [],
 
       menuFechaCreacion: false,
@@ -113,6 +113,7 @@ export default {
         medida: null,
         peso_total_actual: 'Sin peso',
         fecha: null,
+        usuario: Number(sessionStorage.getItem('id')),
       },
       rules: {
         required: (v) => !!v || 'Este campo es obligatorio.',
@@ -159,6 +160,12 @@ export default {
           // Ahora crea la cuenta usando el id del pesaje
           const datosCuenta = {
             id_pesaje: idPesaje,
+            agricultor: this.agricultor,
+            id_estado: this.id_estado,
+            peso_enviado: this.peso_enviado,
+            peso_total_obtenido: this.peso_total_obtenido,
+            diferencia_total: this.diferencia_total,
+
             // agrega aquí otros campos requeridos por tu backend para la cuenta
           }
 
